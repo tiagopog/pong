@@ -19,7 +19,7 @@ on :key_held do |event|
 end
 
 update do
-  ball.move(get(:window))
+  ball.move(window: get(:window), pads: [pad])
   tick += 1
 end
 

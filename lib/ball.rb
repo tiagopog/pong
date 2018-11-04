@@ -1,3 +1,5 @@
+# Deals with the pong's ball logic.
+# @author Tiago Guedes <tiagopog@gmail.com>
 class Ball < Square
   DEFAULTS = {
     speed: 3,
@@ -18,9 +20,10 @@ class Ball < Square
 
   # @api public
   # @param window [Window] the game window
+  # @param pads [Array<Pad>] the game pads
   # @return [Hash] ball's current position
-  def move(window)
-    if x + width >= window.get(:width) || x <= 0
+  def move(window:, pads:)
+    if x + width >= window.get(:width) || x <= 0 || pad_collision?(pads)
       self.direction[:x] *= -1
     end
 
@@ -32,5 +35,16 @@ class Ball < Square
     self.y += direction[:y] * speed
 
     { x: x, y: y }
+  end
+
+  private
+
+  # @api private
+  # @param pads [Array<Pad>] the game pads
+  # @return [Boolean] has the ball collided with any of the pads?
+  def pad_collision?(pads)
+    pads.any? do |pad|
+      y >= pad.y && y <= pad.y + pad.height && x <= pad.x + pad.width
+    end
   end
 end
