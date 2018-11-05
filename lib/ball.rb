@@ -20,7 +20,7 @@ class Ball < Square
 
   # @api public
   # @param window [Window] the game window
-  # @param pads [Array<Pad>] the game pads
+  # @param pads [Hash] the game pads
   # @return [Hash] ball's current position
   def move(window:, pads:)
     if x + width >= window.get(:width) || x <= 0 || pad_collision?(pads)
@@ -40,11 +40,14 @@ class Ball < Square
   private
 
   # @api private
-  # @param pads [Array<Pad>] the game pads
+  # @param pads [Hash] the game pads
   # @return [Boolean] has the ball collided with any of the pads?
   def pad_collision?(pads)
-    pads.any? do |pad|
-      y >= pad.y && y <= pad.y + pad.height && x <= pad.x + pad.width
+    pads.any? do |position, pad|
+      y >= pad.y && y <= pad.y + pad.height && (
+        position == :left && x <= pad.x + pad.width ||
+        position == :right && x + width >= pad.x
+      )
     end
   end
 end
