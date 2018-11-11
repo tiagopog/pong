@@ -4,7 +4,7 @@ require './lib/ball'
 require './lib/pad'
 
 ##
-# Window
+# Window & FPS
 ##
 
 set title: 'Pong',
@@ -12,6 +12,8 @@ set title: 'Pong',
     with: 640,
     height: 480,
     resizable: false
+
+fps_display = Text.new(get(:fps).to_i, x: 315, y: 463, size: 12)
 
 ##
 # Ball
@@ -73,6 +75,8 @@ update do
     score[player] += 1
     score_display[player].text = score[player]
   end
+
+  fps_display.text = get(:fps).to_i
 end
 
 show
