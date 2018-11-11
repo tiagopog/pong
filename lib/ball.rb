@@ -6,11 +6,11 @@ class Ball < Square
     direction: { x: 1, y: 1 }
   }.freeze
 
-  attr_accessor :speed, :direction
+  attr_accessor :speed, :direction, :scored_at
 
   # @api public
   # @param speed [Integer, Float, nil] ball's speed
-  # @param direction [Hash, nil] ball's x and y directions
+  # @param direction [Hash, nil] ball's x and y axis directions
   # @return [Ball]
   def initialize(speed: nil, direction: nil, **args)
     super(args)
@@ -23,12 +23,15 @@ class Ball < Square
   # @param pads [Hash] the game pads
   # @return [Hash] ball's current position
   def move(window:, pads:)
-    if x + width >= window.get(:width) || x <= 0 || pad_collision?(pads)
-      self.direction[:x] *= -1
-    end
+    self.scored_at = nil
 
-    if y + height >= window.get(:height) || y <= 0
+    if edge_collision?(:x, window)
+      self.scored_at = check_edge_collision(:x, window)
+      self.direction[:x] *= -1
+    elsif edge_collision?(:y, window)
       self.direction[:y] *= -1
+    elsif pad_collision?(pads)
+      self.direction[:x] *= -1
     end
 
     self.x += direction[:x] * speed
@@ -37,7 +40,37 @@ class Ball < Square
     { x: x, y: y }
   end
 
+  # @api public
+  # @return [Boolean] did it score a new point?
+  def scored?
+    !scored_at.nil?
+  end
+
   private
+
+  # @api private
+  # @param axis [Symbol] which axis to check the collision
+  # @param window [Window] the game window
+  # @return [Boolean]
+  def edge_collision?(axis, window)
+    !check_edge_collision(axis, window).nil?
+  end
+
+  # @api private
+  # @param axis [Symbol] which axis to check the collision
+  # @param window [Window] the game window
+  # @return [Symbol] edge side where ball has collided
+  def check_edge_collision(axis, window)
+    if axis == :x && x + width >= window.get(:width)
+      :left
+    elsif axis == :x && x <= 0
+      :right
+    elsif axis == :y && y + height >= window.get(:height)
+      :bottom
+    elsif axis == :y &&  y <= 0
+      :top
+    end
+  end
 
   # @api private
   # @param pads [Hash] the game pads
