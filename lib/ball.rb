@@ -62,12 +62,12 @@ class Ball < Square
   # @return [Symbol] edge side where ball has collided
   def check_edge_collision(axis, window)
     if axis == :x && x + width >= window.get(:width)
-      :left
-    elsif axis == :x && x <= 0
       :right
+    elsif axis == :x && x <= 0
+      :left
     elsif axis == :y && y + height >= window.get(:height)
       :bottom
-    elsif axis == :y &&  y <= 0
+    elsif axis == :y && y <= 0
       :top
     end
   end
