@@ -22,7 +22,6 @@ end
 
 update do
   ball.move(window: get(:window), pads: { left: pad1, right: pad2 })
-  tick += 1
 end
 
 show
