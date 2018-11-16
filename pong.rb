@@ -20,8 +20,8 @@ fps_display = Text.new(get(:fps).to_i, x: 315, y: 463, size: 12)
 ##
 
 ball = Ball.new(
-  x: 50,
-  y: 50,
+  x: 640 - (2 + 20) - 3,
+  y: get(:height) / 2 - 80 / 2,
   size: 20,
   speed: 4
 )
@@ -68,7 +68,7 @@ on :key_held do |event|
 end
 
 update do
-  ball.move(window: get(:window), pads: { left: pad1, right: pad2 })
+  ball.move(window: get(:window), pads: [pad1, pad2])
 
   if ball.scored?
     player = ball.scored_at == :left ? :right : :left

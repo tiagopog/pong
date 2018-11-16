@@ -76,11 +76,9 @@ class Ball < Square
   # @param pads [Hash] the game pads
   # @return [Boolean] has the ball collided with any of the pads?
   def pad_collision?(pads)
-    pads.any? do |position, pad|
-      y >= pad.y && y <= pad.y + pad.height && (
-        position == :left && x <= pad.x + pad.width ||
-        position == :right && x + width >= pad.x
-      )
+    pads.any? do |pad|
+      y <= pad.y + pad.height && y + height >= pad.y &&
+        [x + width, pad.x + pad.width].min - [x, pad.x].max > 0
     end
   end
 end
