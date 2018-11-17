@@ -15,6 +15,20 @@ set title: 'Pong',
 
 fps_display = Text.new(get(:fps).to_i, x: 315, y: 463, size: 12)
 
+###
+# Table
+##
+
+16.times do |i|
+  Rectangle.new(
+    width: 5,
+    height: 15,
+    x: get(:width) / 2 - 2.5,
+    y: i * 30,
+    color: 'gray'
+  )
+end
+
 ##
 # Ball
 ##
@@ -23,18 +37,18 @@ ball = Ball.new(
   x: get(:width) / 2 - 5,
   y: get(:height) / 2 - 5 / 2,
   size: 10,
-  speed: 6
+  speed: 5
 )
 
 ##
-# Pads
+# Paddles
 ##
 
 pad1 = Paddle.new(
   x: 2,
   y: get(:height) / 2 - 60 / 2,
-  height: 60,
   width: 10,
+  height: 60,
   speed: 7,
   constraints: { y: { min: 0, max: 480 } }
 )
@@ -42,8 +56,8 @@ pad1 = Paddle.new(
 pad2 = Paddle.new(
   x: 640 - (2 + 10),
   y: get(:height) / 2 - 60 / 2,
-  height: 60,
   width: 10,
+  height: 60,
   speed: 7,
   constraints: { y: { min: 0, max: 480 } }
 )
