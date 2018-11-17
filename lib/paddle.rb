@@ -1,6 +1,6 @@
 # Deals with the pong's pad logic.
 # @author Tiago Guedes <tiagopog@gmail.com>
-class Pad < Rectangle
+class Paddle < Rectangle
   DEFAULTS = { speed: 3 }.freeze
 
   attr_accessor :speed, :constraints

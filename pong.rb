@@ -1,7 +1,7 @@
 require 'ruby2d'
 
 require './lib/ball'
-require './lib/pad'
+require './lib/paddle'
 
 ##
 # Window & FPS
@@ -20,9 +20,9 @@ fps_display = Text.new(get(:fps).to_i, x: 315, y: 463, size: 12)
 ##
 
 ball = Ball.new(
-  x: 640 - (2 + 20) - 3,
-  y: get(:height) / 2 - 80 / 2,
-  size: 20,
+  x: get(:width) / 2 - 5,
+  y: get(:height) / 2 - 5 / 2,
+  size: 10,
   speed: 4
 )
 
@@ -30,20 +30,20 @@ ball = Ball.new(
 # Pads
 ##
 
-pad1 = Pad.new(
+pad1 = Paddle.new(
   x: 2,
-  y: get(:height) / 2 - 80 / 2,
-  height: 80,
-  width: 20,
+  y: get(:height) / 2 - 60 / 2,
+  height: 60,
+  width: 15,
   speed: 4,
   constraints: { y: { min: 0, max: 480 } }
 )
 
-pad2 = Pad.new(
-  x: 640 - (2 + 20),
-  y: get(:height) / 2 - 80 / 2,
-  height: 80,
-  width: 20,
+pad2 = Paddle.new(
+  x: 640 - (2 + 15),
+  y: get(:height) / 2 - 60 / 2,
+  height: 60,
+  width: 15,
   speed: 4,
   constraints: { y: { min: 0, max: 480 } }
 )
