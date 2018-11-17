@@ -23,8 +23,6 @@ class Ball < Square
   # @param pads [Hash] the game pads
   # @return [Hash] ball's current position
   def move(window:, pads:)
-    self.scored_at = nil
-
     if edge_collision?(:x, window)
       self.scored_at = check_edge_collision(:x, window)
       self.direction[:x] *= -1
@@ -44,6 +42,14 @@ class Ball < Square
   # @return [Boolean] did it score a new point?
   def scored?
     !scored_at.nil?
+  end
+
+  # @api public
+  # @param window [Window] the game window
+  # @return [Integer, Float]
+  def reset_position!(window)
+    self.x = window.get(:width) / 2 - width / 2
+    self.y = rand(height..window.get(:height) - height)
   end
 
   private

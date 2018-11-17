@@ -81,13 +81,25 @@ on :key_held do |event|
   pad2.move(event, up: 'o', down: 'k')
 end
 
+ball_reseted_at = nil
+
 update do
-  ball.move(window: get(:window), pads: [pad1, pad2])
+  if !ball_reseted_at
+    ball.move(window: get(:window), pads: [pad1, pad2])
+  elsif get(:frames) - ball_reseted_at >= 60
+    ball_reseted_at = nil
+  end
 
   if ball.scored?
+    # inscrease score
     player = ball.scored_at == :left ? :right : :left
     score[player] += 1
     score_display[player].text = score[player]
+
+    # reset ball
+    ball.scored_at = nil
+    ball.reset_position!(get(:window))
+    ball_reseted_at = get(:frames)
   end
 
   fps_display.text = get(:fps).to_i
