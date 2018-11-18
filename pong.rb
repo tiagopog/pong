@@ -2,6 +2,7 @@ require 'ruby2d'
 
 require './lib/ball'
 require './lib/paddle'
+require './lib/match'
 
 ##
 # Window & FPS
@@ -66,10 +67,9 @@ pad2 = Paddle.new(
 # Score
 ##
 
-score = { left: 0, right: 0 }
 score_display = {
   left: Text.new(
-    score[:left],
+    0,
     x: get(:width) / 2 - 100,
     y: 5,
     font: 'assets/PressStart2P.ttf',
@@ -77,7 +77,7 @@ score_display = {
     size: 40
   ),
   right: Text.new(
-    score[:right],
+    0,
     x: get(:width) / 2 + 60,
     y: 5,
     font: 'assets/PressStart2P.ttf',
@@ -100,11 +100,10 @@ pause_display = Text.new(
 )
 
 ##
-# Game loop & Events
+# Main
 ##
 
-ball_reseted_at = nil
-paused = true
+match = Match.new
 
 # Paddle movement
 on :key_held do |event|
@@ -115,34 +114,26 @@ end
 # Game pause
 on :key_down do |event|
   if event.key == 'space'
-    paused = !paused
+    match.paused = !match.paused
     pause_display.opacity *= -1
   end
 end
 
-# Main
 update do
-  next if paused
-
-  if !ball_reseted_at
-    ball.move(window: get(:window), pads: [pad1, pad2])
-  elsif get(:frames) - ball_reseted_at >= 60
-    ball_reseted_at = nil
-  end
-
-  if ball.scored?
-    # Inscrease score
-    player = ball.scored_at == :left ? :right : :left
-    score[player] += 1
-    score_display[player].text = score[player]
-
-    # Reset ball
-    ball.scored_at = nil
-    ball.reset_position!(get(:window))
-    ball_reseted_at = get(:frames)
-  end
-
   fps_display.text = get(:fps).to_i
+
+  if match.paused?
+    next
+  elsif match.wait_to_start?
+    match.check_wait!(get(:frames))
+  else
+    ball.move(window: get(:window), pads: [pad1, pad2])
+
+    if ball.scored?
+      match.update_score!(ball, score_display)
+      match.restart!(get(:window), ball)
+    end
+  end
 end
 
 show

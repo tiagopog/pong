@@ -1,4 +1,4 @@
-# Deals with the pong's ball logic.
+# Deals with the logic of the pong's ball.
 # @author Tiago Guedes <tiagopog@gmail.com>
 class Ball < Square
   DEFAULTS = {
@@ -19,10 +19,12 @@ class Ball < Square
   end
 
   # @api public
-  # @param window [Window] the game window
-  # @param pads [Hash] the game pads
+  # @param window [Window] the game's window
+  # @param pads [Hash] the game's pads
   # @return [Hash] ball's current position
   def move(window:, pads:)
+    self.scored_at = nil
+
     if edge_collision?(:x, window)
       self.scored_at = check_edge_collision(:x, window)
       self.direction[:x] *= -1
@@ -45,7 +47,7 @@ class Ball < Square
   end
 
   # @api public
-  # @param window [Window] the game window
+  # @param window [Window] the game's window
   # @return [Integer, Float]
   def reset_position!(window)
     self.x = window.get(:width) / 2 - width / 2
@@ -56,7 +58,7 @@ class Ball < Square
 
   # @api private
   # @param axis [Symbol] which axis to check the collision
-  # @param window [Window] the game window
+  # @param window [Window] the game's window
   # @return [Boolean]
   def edge_collision?(axis, window)
     !check_edge_collision(axis, window).nil?
@@ -64,7 +66,7 @@ class Ball < Square
 
   # @api private
   # @param axis [Symbol] which axis to check the collision
-  # @param window [Window] the game window
+  # @param window [Window] the game's window
   # @return [Symbol] edge side where ball has collided
   def check_edge_collision(axis, window)
     if axis == :x && x + width >= window.get(:width)
@@ -79,7 +81,7 @@ class Ball < Square
   end
 
   # @api private
-  # @param pads [Hash] the game pads
+  # @param pads [Hash] the game's pads
   # @return [Boolean] has the ball collided with any of the pads?
   def pad_collision?(pads)
     pads.any? do |pad|

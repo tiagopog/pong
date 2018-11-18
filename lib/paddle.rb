@@ -1,4 +1,4 @@
-# Deals with the pong's pad logic.
+# Deals with the logic of the pong's paddle.
 # @author Tiago Guedes <tiagopog@gmail.com>
 class Paddle < Rectangle
   DEFAULTS = { speed: 3 }.freeze
