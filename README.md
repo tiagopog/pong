@@ -35,3 +35,12 @@ git clone https://github.com/tiagopog/pong.git
 cd pong
 ruby pong.rb
 ```
+
+Paddle control:
+
+* Left:
+  * w: up
+  * s: down
+* Right:
+  * o: up
+  * k: down
