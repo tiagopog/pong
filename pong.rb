@@ -15,7 +15,7 @@ set title: 'Pong',
 
 fps_display = Text.new(get(:fps).to_i, x: 315, y: 463, size: 12)
 
-###
+##
 # Table
 ##
 
@@ -68,8 +68,19 @@ pad2 = Paddle.new(
 
 score = { left: 0, right: 0 }
 score_display = {
-  left: Text.new(score[:left], x: 300),
-  right: Text.new(score[:right], x: 340)
+  left: Text.new(
+    score[:left],
+    x: get(:width) / 2 - 100,
+    y: 5, font: 'assets/PressStart2P.ttf',
+    color: 'gray',
+    size: 40
+  ),
+  right: Text.new(
+    score[:right],
+    x: get(:width) / 2 + 60,
+    y: 5, font: 'assets/PressStart2P.ttf',
+    color: 'gray', size: 40
+  )
 }
 
 ##
