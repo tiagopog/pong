@@ -4,7 +4,7 @@ Classic pong game written in Ruby with the awesome [ruby2d](http://www.ruby2d.co
 
 ![ruby_pong](https://user-images.githubusercontent.com/760933/48669271-293d5e00-eae8-11e8-9359-a9a07005517f.gif)
 
-> Note: the low frame rate here is related to the GIF recording not the game.
+> Note: the low frame rate here is due to the GIF recording not the game itself.
 
 # Install
 
