@@ -71,30 +71,56 @@ score_display = {
   left: Text.new(
     score[:left],
     x: get(:width) / 2 - 100,
-    y: 5, font: 'assets/PressStart2P.ttf',
+    y: 5,
+    font: 'assets/PressStart2P.ttf',
     color: 'gray',
     size: 40
   ),
   right: Text.new(
     score[:right],
     x: get(:width) / 2 + 60,
-    y: 5, font: 'assets/PressStart2P.ttf',
+    y: 5,
+    font: 'assets/PressStart2P.ttf',
     color: 'gray', size: 40
   )
 }
 
 ##
+# Pause
+##
+
+pause_display = Text.new(
+  'PRESS SPACE',
+  x: get(:width) / 2 - 110,
+  y: get(:height) / 2 - 20,
+  font: 'assets/PressStart2P.ttf',
+  color: 'gray',
+  size: 20,
+  opacity: 1
+)
+
+##
 # Game loop & Events
 ##
+
+ball_reseted_at = nil
+paused = true
 
 on :key_held do |event|
   pad1.move(event, up: 'w', down: 's')
   pad2.move(event, up: 'o', down: 'k')
 end
 
-ball_reseted_at = nil
+on :key_down do |event|
+  if event.key == 'space'
+    paused = !paused
+    pause_display.opacity *= -1
+  end
+end
 
 update do
+  next if paused
+
   if !ball_reseted_at
     ball.move(window: get(:window), pads: [pad1, pad2])
   elsif get(:frames) - ball_reseted_at >= 60
