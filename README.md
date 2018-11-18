@@ -1,3 +1,5 @@
+<a href="https://codeclimate.com/github/tiagopog/pong/maintainability"><img src="https://api.codeclimate.com/v1/badges/7b4c8b7c9b25d2be229c/maintainability" /></a>
+
 # About
 
 Classic pong game written in Ruby with the awesome [ruby2d](http://www.ruby2d.com/) framework.
