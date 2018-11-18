@@ -106,11 +106,13 @@ pause_display = Text.new(
 ball_reseted_at = nil
 paused = true
 
+# Paddle movement
 on :key_held do |event|
   pad1.move(event, up: 'w', down: 's')
   pad2.move(event, up: 'o', down: 'k')
 end
 
+# Game pause
 on :key_down do |event|
   if event.key == 'space'
     paused = !paused
@@ -118,6 +120,7 @@ on :key_down do |event|
   end
 end
 
+# Main
 update do
   next if paused
 
@@ -128,12 +131,12 @@ update do
   end
 
   if ball.scored?
-    # inscrease score
+    # Inscrease score
     player = ball.scored_at == :left ? :right : :left
     score[player] += 1
     score_display[player].text = score[player]
 
-    # reset ball
+    # Reset ball
     ball.scored_at = nil
     ball.reset_position!(get(:window))
     ball_reseted_at = get(:frames)
