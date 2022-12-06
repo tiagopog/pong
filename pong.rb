@@ -115,7 +115,7 @@ end
 on :key_down do |event|
   if event.key == 'space'
     match.paused = !match.paused
-    pause_display.opacity *= -1
+    pause_display.color.opacity *= -1
   end
 end
 
